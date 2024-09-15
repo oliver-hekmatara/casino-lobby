@@ -4,7 +4,7 @@ import { useCasinoData } from "@/context/CasinoDataContext";
 import { useGameFilter } from "@/context/GameFilterProvider";
 import React from "react";
 
-export default function TagList() {
+export default function TagFilter() {
     const { setSelectedTags, selectedTags } = useGameFilter();
     const { tags } = useCasinoData();
 

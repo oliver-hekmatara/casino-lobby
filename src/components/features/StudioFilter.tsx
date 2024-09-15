@@ -4,7 +4,7 @@ import { useCasinoData } from "@/context/CasinoDataContext";
 import { useGameFilter } from "@/context/GameFilterProvider";
 import React, { useState } from "react";
 
-export default function StudioList() {
+export default function StudioFilter() {
     const [showAllStudios, setShowAllStudios] = useState<boolean>(false);
     const { setSelectedStudios, selectedStudios, selectedTags } = useGameFilter();
     const { studios } = useCasinoData();
