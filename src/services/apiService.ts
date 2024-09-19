@@ -42,7 +42,7 @@ function preprocessCasinoData(data: CasinoData): CasinoData {
             studioTagMap.set(game.studioId, new Set());
         }
         game.gameTags.forEach((tag) => {
-            // Every game's tag is added to the studioTagMap (no duplicates since using a set).
+            // Game tags are added to their corresponding studio (no duplicates since using a set).
             studioTagMap.get(game.studioId)?.add(tag);
         });
     });
