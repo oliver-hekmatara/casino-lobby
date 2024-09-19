@@ -16,11 +16,10 @@ export default function GameList() {
     const filteredGames = useMemo(() => {
         return games.filter((game) => {
             const tagMatches =
-                selectedTags.length === 0 ||
-                selectedTags.some((tag) => game.gameTags.includes(tag));
+                !selectedTags.length || selectedTags.some((tag) => game.gameTags.includes(tag));
 
             const studioMatches =
-                selectedStudios.length === 0 || selectedStudios.includes(game.studioId);
+                !selectedStudios.length || selectedStudios.includes(game.studioId);
 
             const currencyMatches =
                 selectedCurrency === null || !game.blockedCurrencies.includes(selectedCurrency);
@@ -37,16 +36,14 @@ export default function GameList() {
     }, [filteredGames]);
 
     const handleLoadMore = () => {
-        // Append the next set of games to the visible list
+        // Append the next set of games to the visible list, based on current index.
         setVisibleGames((prevGames) => [
             ...prevGames,
             ...filteredGames.slice(currentIndex, currentIndex + GAMES_PER_LOAD),
         ]);
 
-        // Increment the index
         setCurrentIndex((prevIndex) => prevIndex + GAMES_PER_LOAD);
 
-        // Scroll down to the newly loaded content
         setTimeout(() => {
             window.scrollBy({
                 top: 840,
