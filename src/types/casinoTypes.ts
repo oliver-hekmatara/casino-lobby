@@ -3,6 +3,7 @@ export type Game = {
     name: string;
     imageUrl: string;
     studioId: number;
+    studioName: string;
     gameTags: number[];
     blockedCurrencies: string;
 };

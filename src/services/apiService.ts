@@ -33,23 +33,28 @@ function preprocessCasinoData(data: CasinoData): CasinoData {
     // Map studios to their blocked currencies
     const studioCurrencyMap = new Map<number, string>();
 
-    // Build the map: studioId => Set of game tags and blocked currencies
+    // Map studios to their respective names
+    const studioNameMap = new Map<number, string>();
+
     games.forEach((game) => {
         if (!studioTagMap.has(game.studioId)) {
+            // Initialize studioTagMap with studio id and an empty set (if not already initialized)
             studioTagMap.set(game.studioId, new Set());
         }
         game.gameTags.forEach((tag) => {
+            // Every game's tag is added to the studioTagMap (no duplicates since using a set).
             studioTagMap.get(game.studioId)?.add(tag);
         });
     });
 
-    // Process each studio and map tags and blocked currencies
     const processedStudios = studios.map((studio) => {
-        const gameTags = Array.from(studioTagMap.get(studio.id) || []); // Ensure gameTags is an array
-        const blockedCurrencies = studio.blockedCurrencies || ""; // Ensure blockedCurrencies is a string
+        const gameTags = Array.from(studioTagMap.get(studio.id) || []);
 
-        // Map studio's blocked currencies
-        studioCurrencyMap.set(studio.id, blockedCurrencies);
+        // Map studio id's with blocked currencies
+        studioCurrencyMap.set(studio.id, studio.blockedCurrencies || "");
+
+        //Map studio id's with names
+        studioNameMap.set(studio.id, studio.name);
 
         return {
             ...studio,
@@ -57,13 +62,14 @@ function preprocessCasinoData(data: CasinoData): CasinoData {
         };
     });
 
-    // Update all games with blocked currencies data.
     const processedGames = games.map((game) => {
-        const studioBlockedCurrencies = studioCurrencyMap.get(game.studioId) || "";
+        const blockedCurrencies = studioCurrencyMap.get(game.studioId) || "";
+        const studioName = studioNameMap.get(game.studioId) || "Unknown studio";
 
         return {
             ...game,
-            blockedCurrencies: studioBlockedCurrencies,
+            blockedCurrencies: blockedCurrencies,
+            studioName: studioName,
         };
     });
 

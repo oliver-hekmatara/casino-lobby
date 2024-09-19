@@ -1,5 +1,6 @@
 "use client";
 
+import { Currency } from "@/types/currencyEnums";
 import React, {
     createContext,
     Dispatch,
@@ -21,7 +22,7 @@ type GameFilterContextType = {
 const initialData = {
     selectedStudios: [],
     selectedTags: [],
-    selectedCurrency: "EUR",
+    selectedCurrency: Currency.EUR,
     setSelectedStudios: () => {},
     setSelectedTags: () => {},
     setSelectedCurrency: () => {},
@@ -32,7 +33,7 @@ const GameFilterContext = createContext<GameFilterContextType>(initialData);
 export function GameFilterProvider({ children }: { children: React.ReactNode }) {
     const [selectedStudios, setSelectedStudios] = useState<number[]>([]);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
-    const [selectedCurrency, setSelectedCurrency] = useState<string>("EUR");
+    const [selectedCurrency, setSelectedCurrency] = useState<string>(Currency.EUR);
 
     const contextValues = useMemo(
         () => ({

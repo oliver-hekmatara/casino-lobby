@@ -1,10 +1,11 @@
 "use client";
 
 import { useGameFilter } from "@/context/GameFilterProvider";
+import { Currency } from "@/types/currencyEnums";
 import React from "react";
 
 export default function CurrencySelectList() {
-    const currencies = ["EUR", "USD", "mBTC"];
+    const currencies = [Currency.EUR, Currency.USD, Currency.mBTC];
     const { selectedCurrency, setSelectedCurrency } = useGameFilter();
 
     function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {

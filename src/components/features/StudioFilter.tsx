@@ -16,10 +16,10 @@ export default function StudioFilter() {
 
     function handleStudioClick(id: number = 0) {
         setSelectedStudios((prevState: number[]) => {
-            if (id === 0) return [];
+            if (id === 0) return []; //De-select all studios.
             return prevState.includes(id)
-                ? prevState.filter((studioId) => studioId !== id)
-                : [...prevState, id];
+                ? prevState.filter((studioId) => studioId !== id) //De-select studio if already selected.
+                : [...prevState, id]; //Select studio.
         });
     }
 

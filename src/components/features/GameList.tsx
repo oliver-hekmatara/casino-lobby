@@ -8,15 +8,10 @@ import { useGameFilter } from "@/context/GameFilterProvider";
 const GAMES_PER_LOAD = 20; // Number of games to load per click
 
 export default function GameList() {
-    const { games, studios } = useCasinoData();
-    const { selectedCurrency, selectedTags, selectedStudios } = useGameFilter();
-
     const [visibleGames, setVisibleGames] = useState<Game[]>([]);
     const [currentIndex, setCurrentIndex] = useState<number>(GAMES_PER_LOAD);
-
-    const studioMap = useMemo(() => {
-        return new Map(studios.map((studio) => [studio.id, studio.name]));
-    }, [studios]);
+    const { selectedCurrency, selectedTags, selectedStudios } = useGameFilter();
+    const { games } = useCasinoData();
 
     const filteredGames = useMemo(() => {
         return games.filter((game) => {
@@ -80,7 +75,7 @@ export default function GameList() {
                                 </div>
                                 <div className="w-full text-center p-5  bg-dark-violet rounded-b">
                                     <h4 className="bg-violet-950/80  text-violet-300 px-3 py-1 w-auto inline-block text-xs rounded-full">
-                                        {studioMap.get(game.studioId)}
+                                        {game.studioName}
                                     </h4>
                                     <h3 className="mt-4 text-pink-200 text-md">{game.name}</h3>
                                 </div>
